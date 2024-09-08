@@ -97,7 +97,7 @@ fig.add_trace(go.Bar(
     x=agg_stock_bar['Date_Formatted'], 
     y=agg_stock_bar['Quantity'], 
     name='Stock Quantity',
-    marker_color='oceanblue'
+    marker_color='cream'
 ))
 
 # Line plot for order quantities
