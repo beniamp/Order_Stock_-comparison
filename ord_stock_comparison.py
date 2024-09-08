@@ -176,7 +176,4 @@ fig.update_layout(
 st.plotly_chart(fig)
 
 
-# Display the line plot in Streamlit
-st.pyplot(plt)
-
 
