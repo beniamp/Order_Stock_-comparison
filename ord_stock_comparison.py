@@ -36,8 +36,8 @@ df_orders['Gregorian_Date'] = df_orders['Date_Formatted'].apply(persian_to_grego
 df['Gregorian_Date'] = df['Date_Formatted'].apply(persian_to_gregorian)
 
 # Replace category value with the correct one
-#df['Category'] = df['Category'].replace('گوشی موبایل ', 'گوشی موبایل')
-#df_orders['Category'] = df_orders['Category'].replace('گوشی موبایل ', 'گوشی موبایل')
+df['Category'] = df['Category'].replace('گوشی موبایل ', 'گوشی موبایل')
+df_orders['Category'] = df_orders['Category'].replace('گوشی موبایل ', 'گوشی موبایل')
 
 
 # Generate category options for selection
