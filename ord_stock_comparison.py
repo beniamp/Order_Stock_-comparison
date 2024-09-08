@@ -142,15 +142,39 @@ merged_data = pd.merge(agg_stock[['Date_Formatted', 'Quantity']],
 # Fill missing values with 0
 merged_data.fillna(0, inplace=True)
 
-# Plot the merged data as a line plot
-plt.figure(figsize=(12, 6))
-plt.plot(merged_data['Date_Formatted'], merged_data['Quantity_stock'], label='Stock Quantity', color='blue')
-plt.plot(merged_data['Date_Formatted'], merged_data['Quantity_order'], label='Order Quantity', color='red')
-plt.xlabel('Date')
-plt.ylabel('Volume/Quantity')
-plt.title('Volume/Quantity Over Time')
-plt.xticks(rotation=45)
-plt.legend()
+# Create a Plotly figure
+fig = go.Figure()
+
+# Add a line for stock quantity
+fig.add_trace(go.Scatter(
+    x=merged_data['Date_Formatted'], 
+    y=merged_data['Quantity_stock'], 
+    mode='lines', 
+    name='Stock Quantity', 
+    line=dict(color='blue')
+))
+
+# Add a line for order quantity
+fig.add_trace(go.Scatter(
+    x=merged_data['Date_Formatted'], 
+    y=merged_data['Quantity_order'], 
+    mode='lines', 
+    name='Order Quantity', 
+    line=dict(color='red')
+))
+
+# Set plot title and axis labels
+fig.update_layout(
+    title='Volume/Quantity Over Time for Selected Product',
+    xaxis_title='Date',
+    yaxis_title='Volume/Quantity',
+    xaxis=dict(tickangle=45),  # Rotate x-axis labels
+    legend=dict(x=0, y=1)  # Set legend position
+)
+
+# Display the line plot in Streamlit
+st.plotly_chart(fig)
+
 
 # Display the line plot in Streamlit
 st.pyplot(plt)
