@@ -118,4 +118,4 @@ plt.ylabel('Volume/Quantity')
 plt.title('Volume/Quantity Over Date')
 plt.xticks(rotation=45)
 
-plt.show()
+st.pyplot()
