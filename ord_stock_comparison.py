@@ -85,25 +85,6 @@ agg_order = filtered_ord.groupby(['ProductName', 'Date_Formatted', 'Category']).
 
 agg_stock_bar = filtered_stc.groupby(['Date_Formatted', 'Category']).agg({'Quantity': 'sum'}).reset_index()
 
-
-# Convert 'Date_Formatted' to a categorical type for the bar plot
-agg_stock_bar['Date_Formatted'] = pd.Categorical(agg_stock_bar['Date_Formatted'], ordered=True)
-
-
-# Plotly bar plot
-fig = px.bar(agg_stock_bar, 
-             x='Date_Formatted', 
-             y='Quantity', 
-             color='Category', 
-             title='Stock Quantities by Category Over Time')
-
-# Display the bar plot in Streamlit
-st.plotly_chart(fig)
-
-# Product selection
-products = filtered_stc['Name'].unique()
-selected_product = st.selectbox('Select Product', products)
-
 # Filter aggregated data by selected product
 agg_order = agg_order[agg_order['ProductName'] == selected_product]
 agg_stock = agg_stock[agg_stock['Name'] == selected_product]
@@ -120,6 +101,44 @@ merged_data = pd.merge(agg_stock[['Date_Formatted', 'Quantity']],
 
 # Fill missing values with 0
 merged_data.fillna(0, inplace=True)
+# Plotly bar plot with a line plot overlay
+fig = go.Figure()
+
+# Bar plot for stock quantity
+fig.add_trace(go.Bar(
+    x=merged_data['Date_Formatted'], 
+    y=merged_data['Quantity_stock'], 
+    name='Stock Quantity',
+    marker_color='blue'
+))
+
+# Line plot for order quantity
+fig.add_trace(go.Scatter(
+    x=merged_data['Date_Formatted'], 
+    y=merged_data['Quantity_order'], 
+    name='Order Quantity', 
+    mode='lines+markers', 
+    marker=dict(color='red'),
+    line=dict(color='red')
+))
+
+# Update layout
+fig.update_layout(
+    title="Stock and Order Quantities Over Time",
+    xaxis_title="Date (Categorical)",
+    yaxis_title="Quantity",
+    xaxis_type='category',  # Ensure the x-axis is treated as categorical
+    barmode='group'
+)
+
+# Display the combined bar and line plot in Streamlit
+st.plotly_chart(fig)
+
+# Product selection
+products = filtered_stc['Name'].unique()
+selected_product = st.selectbox('Select Product', products)
+
+
 
 # Plot the merged data
 plt.figure(figsize=(12, 6))
