@@ -82,16 +82,13 @@ filtered_stc = filtered_stc[(filtered_stc['Gregorian_Date'] >= start_date) & (fi
 agg_stock = filtered_stc.groupby(['Name', 'Date_Formatted', 'Category', 'Brand']).agg({'Quantity': 'max', 'BasePrice': 'min'}).reset_index()
 agg_order = filtered_ord.groupby(['ProductName', 'Date_Formatted', 'Category']).agg({'Quantity': 'sum', 'UnitBasePrice': 'min'}).reset_index()
 
-# Product selection
-products = filtered_stc['Name'].unique()
-selected_product = st.selectbox('Select Product', products)
-
-# Filter aggregated data by selected product
-agg_order = agg_order[agg_order['ProductName'] == selected_product]
-agg_stock = agg_stock[agg_stock['Name'] == selected_product]
-
 
 agg_stock_bar = filtered_stc.groupby(['Date_Formatted', 'Category']).agg({'Quantity': 'sum'}).reset_index()
+
+
+# Convert 'Date_Formatted' to a categorical type for the bar plot
+agg_stock_bar['Date_Formatted'] = pd.Categorical(agg_stock_bar['Date_Formatted'], ordered=True)
+
 
 # Plotly bar plot
 fig = px.bar(agg_stock_bar, 
@@ -102,6 +99,17 @@ fig = px.bar(agg_stock_bar,
 
 # Display the bar plot in Streamlit
 st.plotly_chart(fig)
+
+# Product selection
+products = filtered_stc['Name'].unique()
+selected_product = st.selectbox('Select Product', products)
+
+# Filter aggregated data by selected product
+agg_order = agg_order[agg_order['ProductName'] == selected_product]
+agg_stock = agg_stock[agg_stock['Name'] == selected_product]
+
+
+
    
 # Merge the stock and order data on 'Date_Formatted'
 merged_data = pd.merge(agg_stock[['Date_Formatted', 'Quantity']], 
