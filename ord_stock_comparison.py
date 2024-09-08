@@ -168,6 +168,7 @@ fig.update_layout(
     title='Volume/Quantity Over Time for Selected Product',
     xaxis_title='Date',
     yaxis_title='Volume/Quantity',
+    xaxis_type='category',  # Treat x-axis as categorical
     xaxis=dict(tickangle=45),  # Rotate x-axis labels
     legend=dict(x=0, y=1)  # Set legend position
 )
