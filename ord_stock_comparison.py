@@ -171,7 +171,7 @@ fig.update_layout(
     xaxis_type='category',  # Treat x-axis as categorical
     xaxis=dict(tickangle=45),  # Rotate x-axis labels
     legend=dict(x=0, y=1),  # Set legend position
-    plot_bgcolor='white'
+    plot_bgcolor='#b4b8b5'
 )
 
 # Display the line plot in Streamlit
