@@ -87,6 +87,8 @@ agg_order = filtered_ord.groupby(['ProductName', 'Date_Formatted', 'Category']).
 agg_stock_bar = filtered_stc.groupby(['Date_Formatted', 'Category']).agg({'Quantity': 'sum'}).reset_index()
 
 # Plotly bar plot
+fig = go.Figure()
+
 # Bar plot for stock quantities
 fig.add_trace(go.Bar(
     x=agg_stock['Date_Formatted'], 
