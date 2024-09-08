@@ -93,7 +93,7 @@ fig = px.bar(agg_stock_bar,
              color='Category', 
              title='Stock Quantities by Category Over Time')
 # Bar plot for order quantities
-fig.add_trace(go.line(
+fig.add_trace(go.bar(
     x=agg_order['Date_Formatted'], 
     y=agg_order['Quantity'], 
     name='Order Quantity',
