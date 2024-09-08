@@ -1,0 +1,9 @@
+streamlit
+pandas
+plotly
+matplotlib
+datetime
+convertdate
+timedelta
+altair
+jdatetime
