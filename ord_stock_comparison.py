@@ -85,8 +85,18 @@ filtered_stc = filtered_stc[(filtered_stc['Gregorian_Date'] >= start_date) &
                             (filtered_stc['Gregorian_Date'] <= end_date)]
 
 
-agg_stock = filtered_stc.groupby(['Name', 'Color', 'Date_Formatted', 'Category', 'Brand']).agg({'Quantity': 'sum', 'BasePrice': 'min'}).reset_index()
-agg_order = filtered_ord.groupby(['ProductColorName', 'ColorName', 'Date_Formatted', 'Category']).agg({'Quantity': 'sum', 'BasePrice': 'max'}).reset_index()
+# Aggregate stock data
+agg_stock = filtered_stc.groupby(['Name', 'Color', 'Date_Formatted', 'Category', 'Brand']).agg({
+    'Quantity': 'sum', 
+    'BasePrice': 'min'
+}).reset_index()
+
+# Aggregate order data (ensuring consistent column names)
+agg_order = filtered_ord.groupby(['ProductName', 'Color', 'Date_Formatted', 'Category']).agg({
+    'Quantity': 'sum', 
+    'BasePrice': 'max'
+}).reset_index()
+
 
 
 
