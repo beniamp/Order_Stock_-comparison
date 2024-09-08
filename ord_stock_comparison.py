@@ -92,9 +92,27 @@ fig = px.bar(agg_stock_bar,
              y='Quantity', 
              color='Category', 
              title='Stock Quantities by Category Over Time')
+# Bar plot for order quantities
+fig.add_trace(go.line(
+    x=agg_order['Date_Formatted'], 
+    y=agg_order['Quantity'], 
+    name='Order Quantity',
+    marker_color='red'
+))
+
+# Update layout to ensure bars are stacked
+fig.update_layout(
+    title="Stock and Order Quantities by Date",
+    xaxis_title="Date",
+    yaxis_title="Quantity",
+    barmode='overlay',  # Allows overlay of bars
+    xaxis_type='category',  # Treat x-axis as categorical
+    bargap=0.15  # Slight gap between bars
+)
 
 # Display the bar plot in Streamlit
 st.plotly_chart(fig)
+
 
 # Product selection
 products = filtered_stc['Name'].unique()
