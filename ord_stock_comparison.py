@@ -108,7 +108,8 @@ fig.add_trace(go.Bar(
     x=agg_stock_bar['Date_Formatted'], 
     y=agg_stock_bar['Quantity'], 
     name='Stock Quantity',
-    marker_color='silver'
+    marker_color='silver',
+    yaxis = 'y1'
 ))
 
 # Line plot for order quantities
@@ -117,16 +118,21 @@ fig.add_trace(go.Scatter(
     y=agg_order_bar['Quantity'], 
     name='Order Quantity',
     mode='lines',  # This creates a line plot
-    line=dict(color='red')
-))
+    line=dict(color='red'),
+    yaxis= 'y2')
 
 
-# Update layout to ensure bars are stacked
+# Update layout to include secondary y-axis
 fig.update_layout(
     title="Stock and Order Quantities by Date",
     xaxis_title="Date",
-    yaxis_title="Quantity",
-    barmode='overlay',  # Allows overlay of bars
+    yaxis_title="Stock Quantity",  # Primary y-axis label for bar plot
+    yaxis2=dict(
+        title="Order Quantity",  # Secondary y-axis label for line plot
+        overlaying='y',  # Overlay it on the same plot
+        side='right'  # Place it on the right side
+    ),
+    barmode='overlay',  # Overlay bars
     xaxis_type='category',  # Treat x-axis as categorical
     bargap=0.15  # Slight gap between bars
 )
