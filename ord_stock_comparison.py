@@ -170,7 +170,7 @@ fig.update_layout(
     yaxis_title='Volume/Quantity',
     xaxis_type='category',  # Treat x-axis as categorical
     xaxis=dict(tickangle=45),  # Rotate x-axis labels
-    legend=dict(x=0, y=1)  # Set legend position
+    legend=dict(x=0, y=1),  # Set legend position
     plot_bgcolor='white'
 )
 
