@@ -12,6 +12,7 @@ from plotly.subplots import make_subplots
 import jdatetime
 from convertdate import persian
 import streamlit as st
+import matplotlib.pyplot as plt
 
 
 
@@ -96,4 +97,24 @@ selected_product = st.selectbox('Select Product', products)
 agg_order = agg_order[agg_order['ProductName'] == selected_product]
 agg_stock = agg_stock[agg_stock['Name'] == selected_product]
  
-st.dataframe(agg_stock)
+
+
+# Merge the two dataframes on 'Date_Formatted' column
+merged_data = pd.merge(agg_stock[['Date_Formatted', 'Quantity']], 
+                       agg_order[['Date_Formatted', 'Quantity']], 
+                       on='Date_Formatted', 
+                       how='outer', 
+                       suffixes=('_stock', '_order'))
+
+# Fill missing values with 0
+merged_data.fillna(0, inplace=True)
+
+
+plt.figure(figsize=(12, 6))
+plt.plot(merged_data['Date_Formatted'], merged_data['Quantity_sample'], label='Quantity', color='blue')
+plt.plot(merged_data['Date_Formatted'], merged_data['Quantity_sample_order'], label='Volume', color='red')
+plt.xlabel('Date')
+plt.ylabel('Volume/Quantity')
+plt.title('Volume/Quantity Over Date')
+plt.xticks(rotation=45)
+
