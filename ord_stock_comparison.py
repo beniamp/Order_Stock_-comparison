@@ -111,8 +111,8 @@ merged_data.fillna(0, inplace=True)
 
 
 plt.figure(figsize=(12, 6))
-plt.plot(merged_data['Date_Formatted'], merged_data['Quantity_sample'], label='Quantity', color='blue')
-plt.plot(merged_data['Date_Formatted'], merged_data['Quantity_sample_order'], label='Volume', color='red')
+plt.plot(merged_data['Date_Formatted'], merged_data['Quantity_stock'], label='Quantity', color='blue')
+plt.plot(merged_data['Date_Formatted'], merged_data['Quantity_order'], label='Volume', color='red')
 plt.xlabel('Date')
 plt.ylabel('Volume/Quantity')
 plt.title('Volume/Quantity Over Date')
