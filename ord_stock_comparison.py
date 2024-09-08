@@ -91,7 +91,6 @@ agg_order = agg_order[agg_order['ProductName'] == selected_product]
 agg_stock = agg_stock[agg_stock['Name'] == selected_product]
 
 
-Add a bar plot for stock quantities by category and date
 agg_stock_bar = filtered_stc.groupby(['Date_Formatted', 'Category']).agg({'Quantity': 'sum'}).reset_index()
 
 # Plotly bar plot
