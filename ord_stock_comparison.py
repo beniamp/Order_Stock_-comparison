@@ -94,7 +94,7 @@ agg_stock = filtered_stc.groupby(['Name', 'Color', 'Date_Formatted', 'Category',
 # Aggregate order data (ensuring consistent column names)
 agg_order = filtered_ord.groupby(['ProductName', 'Color', 'Date_Formatted', 'Category']).agg({
     'Quantity': 'sum', 
-    'BasePrice': 'max'
+    'BasePrice': 'min'
 }).reset_index()
 
 
