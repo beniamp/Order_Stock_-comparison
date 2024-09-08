@@ -85,6 +85,11 @@ agg_order = filtered_ord.groupby(['ProductName', 'Date_Formatted', 'Category']).
 
 agg_stock_bar = filtered_stc.groupby(['Date_Formatted', 'Category']).agg({'Quantity': 'sum'}).reset_index()
 
+
+# Product selection
+products = filtered_stc['Name'].unique()
+selected_product = st.selectbox('Select Product', products)
+
 # Filter aggregated data by selected product
 agg_order = agg_order[agg_order['ProductName'] == selected_product]
 agg_stock = agg_stock[agg_stock['Name'] == selected_product]
@@ -134,9 +139,7 @@ fig.update_layout(
 # Display the combined bar and line plot in Streamlit
 st.plotly_chart(fig)
 
-# Product selection
-products = filtered_stc['Name'].unique()
-selected_product = st.selectbox('Select Product', products)
+
 
 
 
