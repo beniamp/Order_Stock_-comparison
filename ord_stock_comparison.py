@@ -16,8 +16,6 @@ import matplotlib.pyplot as plt
 
 
 
-# Page setting
-st.set_page_config(layout="wide")
 
 # Load custom CSS
 with open('style.css') as f:
