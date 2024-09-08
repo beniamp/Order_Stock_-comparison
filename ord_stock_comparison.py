@@ -119,7 +119,7 @@ fig.add_trace(go.Scatter(
     name='Order Quantity',
     mode='lines',  # This creates a line plot
     line=dict(color='red'),
-    yaxis= 'y2')
+    yaxis= 'y2'))
 
 
 # Update layout to include secondary y-axis
