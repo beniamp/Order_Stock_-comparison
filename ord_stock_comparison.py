@@ -89,8 +89,11 @@ agg_stock = filtered_stc.groupby(['Name', 'Date_Formatted', 'Category', 'Brand']
 agg_order = filtered_ord.groupby(['ProductName', 'Date_Formatted', 'Category']).agg({'Quantity': 'sum', 'UnitBasePrice': 'min'}).reset_index()
 
 
+products = filtered_stc['Name'].unique()
+selected_product = st.selectbox('Select Product', products)
 
 
-
-st.dataframe(df)
-st.dataframe(agg_order)
+agg_order = agg_order[agg_order['ProductName'] == selected_product]
+agg_stock = agg_stock[agg_stock['Name'] == selected_product]
+ 
+st.dataframe(agg_stock)
