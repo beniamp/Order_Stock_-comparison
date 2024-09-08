@@ -90,6 +90,20 @@ selected_product = st.selectbox('Select Product', products)
 agg_order = agg_order[agg_order['ProductName'] == selected_product]
 agg_stock = agg_stock[agg_stock['Name'] == selected_product]
 
+
+Add a bar plot for stock quantities by category and date
+agg_stock_bar = filtered_stc.groupby(['Date_Formatted', 'Category']).agg({'Quantity': 'sum'}).reset_index()
+
+# Plotly bar plot
+fig = px.bar(agg_stock_bar, 
+             x='Date_Formatted', 
+             y='Quantity', 
+             color='Category', 
+             title='Stock Quantities by Category Over Time')
+
+# Display the bar plot in Streamlit
+st.plotly_chart(fig)
+   
 # Merge the stock and order data on 'Date_Formatted'
 merged_data = pd.merge(agg_stock[['Date_Formatted', 'Quantity']], 
                        agg_order[['Date_Formatted', 'Quantity']], 
