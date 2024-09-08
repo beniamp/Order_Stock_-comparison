@@ -13,6 +13,22 @@ from convertdate import persian
 import streamlit as st
 import matplotlib.pyplot as plt
 
+
+
+
+# Page setting
+st.set_page_config(layout="wide")
+
+# Load custom CSS
+with open('style.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+# Display image
+image = Image.open('dgland_icon.png')
+st.image(image, width=100)  # Adjust width as needed
+
+
+
 # Streamlit cache to load data
 @st.cache_data
 def load_data():
