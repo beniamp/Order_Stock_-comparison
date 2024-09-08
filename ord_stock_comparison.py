@@ -92,5 +92,5 @@ agg_order = filtered_ord.groupby(['ProductName', 'Date_Formatted', 'Category']).
 
 
 
-st.dataframe(agg_stock)
+st.dataframe(df)
 st.dataframe(agg_order)
