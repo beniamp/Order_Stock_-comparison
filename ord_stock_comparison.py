@@ -83,8 +83,18 @@ agg_stock = filtered_stc.groupby(['Name', 'Date_Formatted', 'Category', 'Brand']
 agg_order = filtered_ord.groupby(['ProductName', 'Date_Formatted', 'Category']).agg({'Quantity': 'sum', 'UnitBasePrice': 'min'}).reset_index()
 
 
+# Add a bar plot for stock quantities by category and date
 agg_stock_bar = filtered_stc.groupby(['Date_Formatted', 'Category']).agg({'Quantity': 'sum'}).reset_index()
 
+# Plotly bar plot
+fig = px.bar(agg_stock_bar, 
+             x='Date_Formatted', 
+             y='Quantity', 
+             color='Category', 
+             title='Stock Quantities by Category Over Time')
+
+# Display the bar plot in Streamlit
+st.plotly_chart(fig)
 
 # Product selection
 products = filtered_stc['Name'].unique()
@@ -94,9 +104,6 @@ selected_product = st.selectbox('Select Product', products)
 agg_order = agg_order[agg_order['ProductName'] == selected_product]
 agg_stock = agg_stock[agg_stock['Name'] == selected_product]
 
-
-
-   
 # Merge the stock and order data on 'Date_Formatted'
 merged_data = pd.merge(agg_stock[['Date_Formatted', 'Quantity']], 
                        agg_order[['Date_Formatted', 'Quantity']], 
@@ -106,44 +113,8 @@ merged_data = pd.merge(agg_stock[['Date_Formatted', 'Quantity']],
 
 # Fill missing values with 0
 merged_data.fillna(0, inplace=True)
-# Plotly bar plot with a line plot overlay
-fig = go.Figure()
 
-# Bar plot for stock quantity
-fig.add_trace(go.Bar(
-    x=merged_data['Date_Formatted'], 
-    y=merged_data['Quantity_stock'], 
-    name='Stock Quantity',
-    marker_color='blue'
-))
-
-# Line plot for order quantity
-fig.add_trace(go.Scatter(
-    x=merged_data['Date_Formatted'], 
-    y=merged_data['Quantity_order'], 
-    name='Order Quantity', 
-    mode='lines+markers', 
-    marker=dict(color='red'),
-    line=dict(color='red')
-))
-
-# Update layout
-fig.update_layout(
-    title="Stock and Order Quantities Over Time",
-    xaxis_title="Date (Categorical)",
-    yaxis_title="Quantity",
-    xaxis_type='category',  # Ensure the x-axis is treated as categorical
-    barmode='group'
-)
-
-# Display the combined bar and line plot in Streamlit
-st.plotly_chart(fig)
-
-
-
-
-
-# Plot the merged data
+# Plot the merged data as a line plot
 plt.figure(figsize=(12, 6))
 plt.plot(merged_data['Date_Formatted'], merged_data['Quantity_stock'], label='Stock Quantity', color='blue')
 plt.plot(merged_data['Date_Formatted'], merged_data['Quantity_order'], label='Order Quantity', color='red')
@@ -153,5 +124,7 @@ plt.title('Volume/Quantity Over Time')
 plt.xticks(rotation=45)
 plt.legend()
 
-# Display the plot in Streamlit
+# Display the line plot in Streamlit
 st.pyplot(plt)
+
+
