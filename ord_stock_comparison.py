@@ -87,18 +87,23 @@ agg_order = filtered_ord.groupby(['ProductName', 'Date_Formatted', 'Category']).
 agg_stock_bar = filtered_stc.groupby(['Date_Formatted', 'Category']).agg({'Quantity': 'sum'}).reset_index()
 
 # Plotly bar plot
-fig = px.bar(agg_stock_bar, 
-             x='Date_Formatted', 
-             y='Quantity', 
-             color='Category', 
-             title='Stock Quantities by Category Over Time')
-# Bar plot for order quantities
-fig.add_trace(go.scatter(
+# Bar plot for stock quantities
+fig.add_trace(go.Bar(
+    x=agg_stock['Date_Formatted'], 
+    y=agg_stock['Quantity'], 
+    name='Stock Quantity',
+    marker_color='blue'
+))
+
+# Line plot for order quantities
+fig.add_trace(go.Scatter(
     x=agg_order['Date_Formatted'], 
     y=agg_order['Quantity'], 
     name='Order Quantity',
-    marker_color='red'
+    mode='lines',  # This creates a line plot
+    line=dict(color='red')
 ))
+
 
 # Update layout to ensure bars are stacked
 fig.update_layout(
