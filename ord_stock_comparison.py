@@ -15,7 +15,7 @@ import streamlit as st
 
 
 
-df = pd.read_csv('stock_facts.csv')
+df = pd.read_excel('stock_facts.xlsx')
 df_orders = pd.read_csv('Orders.csv')
 
 
